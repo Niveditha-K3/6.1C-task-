@@ -13,7 +13,7 @@ pipeline {
         
         stage('Unit and Integration Tests') {
             steps {
-                echo ''Running unit tests''
+                echo 'Running unit tests'
                 // Example: JUnit or TestNG for unit tests
                 // sh 'mvn test'
                 
@@ -23,23 +23,23 @@ pipeline {
             }
             post {
                 success {
-                    emailext body: Unit and Integration Tests passed successfully
-                    subject: 'Unit and Integration Tests Passed',
-                    mail to: 'kniveditha30@gmail.com',
-                    attachLog: true
+                    mail to: "kniveditha30@gmail.com",
+                     body: "Unit and Integration Tests passed successfully" ,
+                    subject: "Unit and Integration Tests Passed"
+                    
                 }
                 failure {
-                    emailext body: Unit and Integration Tests failed                
-                    subject: 'Unit and Integration Tests Failed',
-                    mail to: 'kniveditha30@gmail.com',
-                    attachLog: true
+                   mail to: "kniveditha30@gmail.com",
+                   body: "Unit and Integration Tests failed" ,               
+                   subject: "Unit and Integration Tests Failed"
+                    
                 }
             }
         }
         
         stage('Code Analysis') {
             steps {
-                echo ''Performing code analysis using SonarQube''
+                echo 'Performing code analysis using SonarQube'
                 // Example: SonarQube for code analysis
                 // sh 'sonar-scanner'
             }
@@ -47,21 +47,21 @@ pipeline {
         
         stage('Security Scan') {
             steps {
-                echo ''Performing security scan using OWASP Dependency-Check''
+                echo 'Performing security scan using OWASP Dependency-Check'
                 // Example: OWASP Dependency-Check for security scan
                 // sh 'dependency-check --scan <path_to_project>'
             }
             post {
                 success {
-                    emailext body: Security Scan passed successfully.
-                    subject: 'Security Scan Passed',
-                   mail to: 'kniveditha30@gmail.com',
+                      mail to: "kniveditha30@gmail.com",
+                      body: "Security Scan passed successfully" ,
+                    subject: "Security Scan Passed",
                     attachLog: true
                 }
                 failure {
-                    emailext body: Security Scan failed.
-                    subject: 'Security Scan Failed',
-                    mail to: 'kniveditha30@gmail.com',
+                    mail to: "kniveditha30@gmail.com",
+                     body: "Security Scan failed",
+                    subject: "Security Scan Failed",
                     attachLog: true
                 }
             }
@@ -69,7 +69,7 @@ pipeline {
         
         stage('Deploy to Staging') {
             steps {
-                echo ''Deploying the application to staging server (e.g., AWS EC2 instance)''
+                echo 'Deploying the application to staging server (e.g., AWS EC2 instance)'
                 // Example: AWS CLI for deploying to AWS EC2 instance
                 // sh 'aws ec2 deploy ...'
             }
@@ -77,7 +77,7 @@ pipeline {
         
         stage('Integration Tests on Staging') {
             steps {
-                echo ''Running integration tests on staging environment''
+                echo 'Running integration tests on staging environment'
                 // Example: Selenium or Postman for integration tests
                 // sh 'run_integration_tests.sh'
             }
@@ -85,7 +85,7 @@ pipeline {
         
         stage('Deploy to Production') {
             steps {
-                echo ''Deploying the application to production server (e.g., AWS EC2 instance)''
+                echo 'Deploying the application to production server (e.g., AWS EC2 instance)'
                 // Example: AWS CLI for deploying to AWS EC2 instance
                 // sh 'aws ec2 deploy ...'
             }
