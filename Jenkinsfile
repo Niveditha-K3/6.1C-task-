@@ -1,93 +1,93 @@
 pipeline {
     agent any
-    
     stages {
         stage('Build') {
             steps {
-                // Use the 'tool' directive to specify the Maven installation
-                tool 'Maven'
-                // Execute Maven build commands
-                sh 'mvn clean package'
+                echo 'Executing build...'
+            }
+            post {
+                success {
+                    mail to: 'kondraniveditha@gmail.com',
+                    subject: 'Pipeline Success',
+                    body: 'The pipeline completed successfully.'
+                }
+                failure {
+                    mail to: 'kondraniveditha@gmail.com',
+                    subject: 'Pipeline Failure',
+                    body: 'The pipeline failed. Please check the Jenkins logs for more details.'
+                }
             }
         }
-        
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests'
-                // Example: JUnit or TestNG for unit tests
-                // sh 'mvn test'
-                
-                echo 'Running integration tests'
-                // Example: Selenium for integration tests
-                // sh 'mvn verify'
+                echo 'Running unit and integration tests...'
+                // Run appropriate tests here
             }
             post {
                 success {
-                    mail to: "kniveditha30@gmail.com",
-                     body: "Unit and Integration Tests passed successfully" ,
-                    subject: "Unit and Integration Tests Passed"
-                    
+                    mail to: 'kondraniveditha@gmail.com',
+                    subject: 'Pipeline Success',
+                    body: 'The pipeline completed successfully.'
                 }
                 failure {
-                   mail to: "kniveditha30@gmail.com",
-                   body: "Unit and Integration Tests failed" ,               
-                   subject: "Unit and Integration Tests Failed"
-                    
+                    mail to: 'kondraniveditha@gmail.com',
+                    subject: 'Pipeline Failure',
+                    body: 'The pipeline failed. Please check the Jenkins logs for more details.'
                 }
             }
         }
-        
         stage('Code Analysis') {
             steps {
-                echo 'Performing code analysis using SonarQube'
-                // Example: SonarQube for code analysis
-                // sh 'sonar-scanner'
-            }
-        }
-        
-        stage('Security Scan') {
-            steps {
-                echo 'Performing security scan using OWASP Dependency-Check'
-                // Example: OWASP Dependency-Check for security scan
-                // sh 'dependency-check --scan <path_to_project>'
+                echo 'Performing code analysis...'
+                // Integrate a code analysis tool using Jenkins plugin
             }
             post {
                 success {
-                      mail to: "kniveditha30@gmail.com",
-                      body: "Security Scan passed successfully" ,
-                    subject: "Security Scan Passed",
-                    attachLog: true
+                    mail to: 'kondraniveditha@gmail.com',
+                    subject: 'Pipeline Success',
+                    body: 'The pipeline completed successfully.'
                 }
                 failure {
-                    mail to: "kniveditha30@gmail.com",
-                     body: "Security Scan failed",
-                    subject: "Security Scan Failed",
-                    attachLog: true
+                    mail to: 'kondraniveditha@gmail.com',
+                    subject: 'Pipeline Failure',
+                    body: 'The pipeline failed. Please check the Jenkins logs for more details.'
                 }
             }
         }
-        
+        stage('Security Scan') {
+            steps {
+                echo 'Performing security scan...'
+                // Perform security scan using a specific tool
+            }
+            post {
+                success {
+                    mail to: 'kondraniveditha@gmail.com',
+                    subject: 'Pipeline Success',
+                    body: 'The pipeline completed successfully.'
+                }
+                failure {
+                    mail to: 'kondraniveditha@gmail.com',
+                    subject: 'Pipeline Failure',
+                    body: 'The pipeline failed. Please check the Jenkins logs for more details.'
+                }
+            }
+        }
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying the application to staging server (e.g., AWS EC2 instance)'
-                // Example: AWS CLI for deploying to AWS EC2 instance
-                // sh 'aws ec2 deploy ...'
+                echo 'Deploying to staging environment...'
+                // Deploy to staging server
             }
         }
-        
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running integration tests on staging environment'
-                // Example: Selenium or Postman for integration tests
-                // sh 'run_integration_tests.sh'
+                echo 'Running integration tests on staging environment...'
+                // Run integration tests on staging environment
             }
         }
-        
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying the application to production server (e.g., AWS EC2 instance)'
-                // Example: AWS CLI for deploying to AWS EC2 instance
-                // sh 'aws ec2 deploy ...'
+                echo 'Deploying to production environment...'
+                // Deploy to production server
             }
         }
     }
